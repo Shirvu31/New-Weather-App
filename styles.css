@@ -1,0 +1,41 @@
+.day {
+  text-align: center;
+}
+.temp {
+  text-align: center;
+}
+
+h2 {
+  color: blueviolet;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+  border-style: solid;
+  border-radius: 10px;
+  margin: 10px 10px;
+}
+
+h1,
+h4 {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
+  color: green;
+  margin: 10px 10px;
+  padding: 10px;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+body {
+  max-width: 2000px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.sticker {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cityName {
+  margin: 10px 50px;
+  padding-left: 50px;
+}
