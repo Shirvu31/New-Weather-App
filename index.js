@@ -1,28 +1,52 @@
-function searchCity() {
-  let apiKey = "7ed26a6948c661d05fafe7355b41b2ec";
-  let city = document.querySelector("#cityName").value;
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-  axios.get(url).then(showTemp);
+function formatDate(date) {
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  let dayIndex = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[dayIndex];
+
+  return `${day} ${hours}:${minutes}`;
+}
+
+function displayWeatherCondition(response) {
+  document.querySelector("#city").innerHTML = response.data.name;
+  document.querySelector("#temperature").innerHTML = Math.round(
+    response.data.main.temp
+  );
+}
+
+function searchCity(city) {
+  let apiKey = "cabdbda40038ba7d1165b953b1c7bd6c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayWeatherCondition);
 }
 
 function handleSubmit(event) {
   event.preventDefault();
-  let city = document.querySelector("#cityName").value;
+  let city = document.querySelector("#city-input").value;
   searchCity(city);
 }
 
-function showTemp(response) {
-  let apiKey = "7ed26a6948c661d05fafe7355b41b2ec";
-  let city = document.querySelector("#cityName").value;
-  let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+function searchLocation(position) {
+  let apiKey = "cabdbda40038ba7d1165b953b1c7bd6c";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
 
-  let temperature = Math.round(response.data.main.temp);
-  console.log(temperature);
-  let mess = `The temperature in ${city} is ${temperature} degrees`;
-  let displayMess = document.querySelector("#displayTemp");
-  displayMess.innerHTML = mess;
-
-  axios.get(url).then(showTemp);
+  axios.get(apiUrl).then(displayWeatherCondition);
 }
 
 function getCurrentLocation(event) {
@@ -30,42 +54,26 @@ function getCurrentLocation(event) {
   navigator.geolocation.getCurrentPosition(searchLocation);
 }
 
-let currentLocationButton = document.querySelector("#current-location-button");
-currentLocationButton.addEventListener("click", getCurrentLocation);
+function convertToFahrenheit(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = 66;
+}
 
-searchCity("Durban");
+function convertToCelsius(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = 19;
+}
+
+let dateElement = document.querySelector("#date");
+let currentTime = new Date();
+dateElement.innerHTML = formatDate(currentTime);
 
 let searchForm = document.querySelector("#search-form");
 searchForm.addEventListener("submit", handleSubmit);
 
-let currentDate = document.querySelector("#date");
-let now = new Date();
-let date = now.getDate();
-let months = [
-  "Jan",
-  "Feb",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-let month = months[now.getMonth()];
-let year = now.getFullYear();
-let days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
-let day = days[now.getDay()];
-let hours = now.getHours();
-if (hours < 10) {
-  hours = `0${hours}`;
-}
-let minutes = now.getMinutes();
-if (minutes < 10) {
-  minutes = `0${minutes}`;
-}
+let currentLocationButton = document.querySelector("#current-location-button");
+currentLocationButton.addEventListener("click", getCurrentLocation);
 
-currentDate.innerHTML = `${date} ${month} ${year} ; ${day}day ${hours}:${minutes}`;
+searchCity("Durban");
