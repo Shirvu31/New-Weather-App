@@ -57,7 +57,7 @@ let months = [
 ];
 let month = months[now.getMonth()];
 let year = now.getFullYear();
-let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+let days = ["Sun", "Mon", "Tues", "Wednes", "Thurs", "Fri", "Satur"];
 let day = days[now.getDay()];
 let hours = now.getHours();
 if (hours < 10) {
